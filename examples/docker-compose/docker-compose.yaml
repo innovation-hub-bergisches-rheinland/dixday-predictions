@@ -1,0 +1,42 @@
+version: '3.8'
+
+services:
+  zookeeper:
+    image: wurstmeister/zookeeper:3.4.6
+    ports:
+      - '2181:2181'
+    volumes:
+      - zookeeper-conf:/opt/zookeeper-3.4.6/conf
+      - zookeeper-data:/opt/zookeeper-3.4.6/data
+
+  kafka:
+    image: wurstmeister/kafka:2.13-2.7.0
+    depends_on:
+      - zookeeper
+    ports:
+      - target: 9094
+        published: 9094
+        protocol: tcp
+        mode: host
+    volumes:
+      - kafka:/kafka
+    environment:
+      HOSTNAME_COMMAND: "docker info | grep ^Name: | cut -d' ' -f 2"
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: INSIDE:PLAINTEXT,OUTSIDE:PLAINTEXT
+      KAFKA_ADVERTISED_LISTENERS: INSIDE://:9092,OUTSIDE://_{HOSTNAME_COMMAND}:9094
+      KAFKA_LISTENERS: INSIDE://:9092,OUTSIDE://:9094
+      KAFKA_INTER_BROKER_LISTENER_NAME: INSIDE
+
+  anomaly-detection:
+    image: quay.io/innovation-hub-bergisches-rheinland/showcase-3d-printer-anomaly-detection:local
+    depends_on:
+      - zookeeper
+      - kafka
+    volumes:
+      - ./config:/etc/xdg/showcase-3d-printer-anomaly-detection:ro
+
+volumes:
+  kafka:
+  zookeeper-conf:
+  zookeeper-data:

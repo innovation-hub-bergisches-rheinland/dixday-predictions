@@ -1,0 +1,27 @@
+[tool.poetry]
+name = "generic-python-module"
+version = "0.1.0"
+description = "a template for a generic pipeline data processor"
+license = "Apache-2.0"
+authors = [
+    "Jörn Richter <joern.richter@th-koeln.de>",
+]
+readme = "README.md"
+repository = "https://github.com/innovation-hub-bergisches-rheinland/dp-hackaton-day2.git"
+
+[tool.poetry.dependencies]
+python = "^3.8"
+appdirs = "^1.4.4"
+kafka-python = "^2.0.2"
+PyYAML = "^5.4.1"
+
+[tool.poetry.dev-dependencies]
+pytest = "^6.2.4"
+bandit = "^1.7.0"
+black = "^21.7b0"
+bump2version = "^1.0.1"
+flake8 = "^3.9.2"
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"

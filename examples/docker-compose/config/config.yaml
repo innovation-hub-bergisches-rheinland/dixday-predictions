@@ -1,0 +1,12 @@
+General:
+  KAFKA_BROKER_URL: kafka:9094
+  KAFKA_CONSUMER_TIMEOUT_MS: 120000
+
+anomaly_detection:
+  IN_TOPIC:
+    showcase-3d-printer_prusa-esp32: data.avsc
+  IN_GROUP: ender_printer_anomaly_detection
+  OUT_TOPIC:
+    ender_printer_anomalies: anomalies.avsc
+  JSON_QUERY: fields
+  DATA_COLUMNS: [ax, ay, az, gx, gy, gz]
