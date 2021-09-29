@@ -1,5 +1,0 @@
-kafka:
-  KAFKA_BROKER_URL: localhost:9092
-  IN_GROUP: python_consumer
-  IN_TOPIC: raw_data
-  OUT_TOPIC: python_data

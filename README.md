@@ -5,7 +5,8 @@
 
 ```json
 {
-    "temp": 25.0,
+    "temperature": 25.0,
+    "timestamp": 175546546132,
     ...
 }
 ```
@@ -22,9 +23,9 @@ directory:
 
 ## Contributing
 
-The source code of Anomaly Detection for 3D-Printer Showcase can be found on
+The source code of dixday-predictions can be found on
 Github:
-<https://github.com/innovation-hub-bergisches-rheinland/showcase-3d-printer-anomaly-detection/>
+<https://github.com/innovation-hub-bergisches-rheinland/dixday-predictions/>
 
 We'd love to have you contribute! Please refer to our
 [contribution guidelines](CONTRIBUTING.md) for details.

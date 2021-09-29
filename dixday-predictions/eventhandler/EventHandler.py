@@ -12,22 +12,24 @@ class EventHandler:
         self.DATA_TO_PREDICT = config["DATA_TO_PREDICT"]  # TODO 100 ~30 sec
         self.TEMPERATURE_THRESHOLD = config["TEMPERATURE_THRESHOLD"]  # TODO 27.0
         self.FREQUENCY = config["FREQUENCY"]  # TODO 30
+        self.TEMPERATURE_KEY = config["TEMPERATURE_KEY"]
+        self.TIMESTAMP_KEY = config["TIMESTAMP_KEY"]
+        self.PREDICTION_KEY = config["PREDICTION_KEY"]
         self.count = 0
 
     def on_event(self, data: dict, topic: str):
         try:
             state = self._handle_temperature_data(data)
             if state:
-                self.return_func({"state": state})
+                self.return_func({self.PREDICTION_KEY: state})
         except Exception as e:
             traceback.print_tb(e)
 
     def _handle_temperature_data(self, data: dict):
         self.count = self.count + 1
 
-        # TODO adjust keys
-        tempValue = data["temp"]
-        datetime = data["time"]
+        tempValue = data[self.TEMPERATURE_KEY]
+        datetime = data[self.TIMESTAMP_KEY]
 
         # append data point
         self.temperatureData[datetime] = tempValue
