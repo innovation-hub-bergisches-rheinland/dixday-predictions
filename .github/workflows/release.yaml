@@ -5,7 +5,7 @@ on:
     branches:
       - main
     paths:
-      - dixday-predictions/**
+      - dixday_predictions/**
       - tests/**
       - .python-version
       - poetry.lock
@@ -15,7 +15,7 @@ on:
 
 env:
   REGISTRY: quay.io/innovation-hub-bergisches-rheinland
-  IMAGE: dixday-predictions
+  IMAGE: dixday_predictions
   BUILDER: gcr.io/buildpacks/builder:v1
 
 jobs:

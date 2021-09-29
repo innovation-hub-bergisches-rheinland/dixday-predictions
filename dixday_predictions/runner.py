@@ -26,7 +26,7 @@ def read_config(config_path) -> dict:
 
 
 def main():
-    dirs = AppDirs("dixday-predictions")
+    dirs = AppDirs("dixday_predictions")
     config_path = os.path.join(dirs.site_config_dir, "config.yaml")
     config = read_config(config_path=config_path)
     kafka_broker_url, consumer_topics, producer_topics = config

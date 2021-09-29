@@ -36,10 +36,10 @@ jobs:
         run: poetry install
 
       - name: Lint with flake8
-        run: poetry run flake8 dixday-predictions
+        run: poetry run flake8 dixday_predictions
 
       - name: Scan with bandit
-        run: poetry run bandit --recursive dixday-predictions --configfile bandit.yaml
+        run: poetry run bandit --recursive dixday_predictions --configfile bandit.yaml
 
       - name: Test with pytest
         run: poetry run pytest
