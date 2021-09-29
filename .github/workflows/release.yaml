@@ -15,7 +15,7 @@ on:
 
 env:
   REGISTRY: quay.io/innovation-hub-bergisches-rheinland
-  IMAGE: dixday_predictions
+  IMAGE: dixday-predictions
   BUILDER: gcr.io/buildpacks/builder:v1
 
 jobs:
