@@ -5,16 +5,16 @@ import traceback
 
 class EventHandler:
 
-    def __init__(self, return_func, config):
+    def __init__(self, return_func, config: dict):
         self.return_func = return_func
         self.temperatureData = pd.Series()
-        self.MIN_TRAIN_DATA = config["MIN_TRAIN_DATA"]  # TODO 100 ~60 sec
-        self.DATA_TO_PREDICT = config["DATA_TO_PREDICT"]  # TODO 100 ~30 sec
-        self.TEMPERATURE_THRESHOLD = config["TEMPERATURE_THRESHOLD"]  # TODO 27.0
-        self.FREQUENCY = config["FREQUENCY"]  # TODO 30
-        self.TEMPERATURE_KEY = config["TEMPERATURE_KEY"]
-        self.TIMESTAMP_KEY = config["TIMESTAMP_KEY"]
-        self.PREDICTION_KEY = config["PREDICTION_KEY"]
+        self.MIN_TRAIN_DATA = config.get("MIN_TRAIN_DATA")  # TODO 100 ~60 sec
+        self.DATA_TO_PREDICT = config.get("DATA_TO_PREDICT")  # TODO 100 ~30 sec
+        self.TEMPERATURE_THRESHOLD = config.get("TEMPERATURE_THRESHOLD")  # TODO 27.0
+        self.FREQUENCY = config.get("FREQUENCY")  # TODO 30
+        self.TEMPERATURE_KEY = config.get("TEMPERATURE_KEY")
+        self.TIMESTAMP_KEY = config.get("TIMESTAMP_KEY")
+        self.PREDICTION_KEY = config.get("PREDICTION_KEY")
         self.count = 0
 
     def on_event(self, data: dict, topic: str):
