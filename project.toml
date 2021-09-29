@@ -1,10 +1,10 @@
 [build]
 include = [
-    "showcase_3d_printer_anomaly_detection",
+    "dixday-predictions",
     ".python-version",
     "requirements.txt"
 ]
 
 [[build.env]]
 name="GOOGLE_ENTRYPOINT"
-value="python3 -u showcase_3d_printer_anomaly_detection/runner.py"
+value="python3 -u dixday-predictions/runner.py"
