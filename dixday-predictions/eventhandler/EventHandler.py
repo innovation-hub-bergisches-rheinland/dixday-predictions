@@ -5,22 +5,22 @@ import traceback
 
 class EventHandler:
 
-    def __init__(self, return_func):
+    def __init__(self, return_func, config):
         self.return_func = return_func
         self.temperatureData = pd.Series()
-        self.MIN_TRAIN_DATA = 100  # TODO ~60 sec
-        self.DATA_TO_PREDICT = 100  # TODO ~30 sec
-        self.TEMPERATURE_THRESHOLD = 27.0  # TODO
-        self.FREQUENCY = 30  # TODO
+        self.MIN_TRAIN_DATA = config["MIN_TRAIN_DATA"]  # TODO 100 ~60 sec
+        self.DATA_TO_PREDICT = config["DATA_TO_PREDICT"]  # TODO 100 ~30 sec
+        self.TEMPERATURE_THRESHOLD = config["TEMPERATURE_THRESHOLD"]  # TODO 27.0
+        self.FREQUENCY = config["FREQUENCY"]  # TODO 30
         self.count = 0
 
     def on_event(self, data: dict, topic: str):
         try:
-            self._handle_temperature_data(data)
+            state = self._handle_temperature_data(data)
+            if state:
+                self.return_func({"state": state})
         except Exception as e:
             traceback.print_tb(e)
-        # TODO:
-        # self.return_func(data)
 
     def _handle_temperature_data(self, data: dict):
         self.count = self.count + 1
@@ -39,7 +39,7 @@ class EventHandler:
 
             # predict only each FREQUENCY steps
             if self.count % self.FREQUENCY == 0:
-                self.trainAndPredict(self.temperatureData)
+                return self.trainAndPredict(self.temperatureData)
 
     def trainAndPredict(self, series):
         # train Holt-winters model

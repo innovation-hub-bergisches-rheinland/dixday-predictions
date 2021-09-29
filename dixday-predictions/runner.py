@@ -26,7 +26,7 @@ def read_config(config_path) -> dict:
 
 
 def main():
-    dirs = AppDirs("pythongenericmodule")  # TODO insert module name here
+    dirs = AppDirs("dixday-predictions")
     config_path = os.path.join(dirs.site_config_dir, "config.yaml")
     config = read_config(config_path=config_path)
     kafka_broker_url, consumer_topics, producer_topics = config
@@ -36,7 +36,7 @@ def main():
                 consumer_topics=consumer_topics,
                 producer_topics=producer_topics
             )
-    eventHandler = EventHandler(return_func=producer.send_msg)
+    eventHandler = EventHandler(return_func=producer.send_msg, config=config)
     for consumer in consumers:
         consumer.register_kafka_listener(listener_func=eventHandler.on_event)
 
