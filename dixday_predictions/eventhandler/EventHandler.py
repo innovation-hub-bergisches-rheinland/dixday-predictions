@@ -20,7 +20,7 @@ class EventHandler:
     def on_event(self, data: dict, topic: str):
         try:
             state = self._handle_temperature_data(data)
-            if state:
+            if state is not None:
                 self.return_func({self.PREDICTION_KEY: state})
         except Exception as e:
             traceback.print_tb(e)
