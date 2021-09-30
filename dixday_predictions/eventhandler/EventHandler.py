@@ -10,7 +10,6 @@ class EventHandler:
         self.temperatureData = pd.Series()
         self.MIN_TRAIN_DATA = config.get("MIN_TRAIN_DATA")  # TODO 100 ~60 sec
         self.DATA_TO_PREDICT = config.get("DATA_TO_PREDICT")  # TODO 100 ~30 sec
-        self.TEMPERATURE_THRESHOLD = config.get("TEMPERATURE_THRESHOLD")  # TODO 27.0
         self.FREQUENCY = config.get("FREQUENCY")  # TODO 30
         self.TEMPERATURE_KEY = config.get("TEMPERATURE_KEY")
         self.TIMESTAMP_KEY = config.get("TIMESTAMP_KEY")
@@ -19,9 +18,9 @@ class EventHandler:
 
     def on_event(self, data: dict, topic: str):
         try:
-            state = self._handle_temperature_data(data)
-            if state is not None:
-                self.return_func({self.PREDICTION_KEY: state})
+            predictions = self._handle_temperature_data(data)
+            if predictions is not None:
+                self.return_func({self.PREDICTION_KEY: predictions.to_list()})
         except Exception as e:
             traceback.print_tb(e)
 
@@ -44,16 +43,10 @@ class EventHandler:
             if self.count % self.FREQUENCY == 0:
                 return self.trainAndPredict(self.temperatureData)
 
-    def trainAndPredict(self, series):
+    def trainAndPredict(self, series) -> pd.Series:
         # train Holt-winters model
         model = Holt(series)
         fit = model.fit(optimized=True)
 
         # predict defined nr of points
-        pred = fit.forecast(self.DATA_TO_PREDICT)
-
-        # check if THRESHOLD will be reached
-        if(pred.max() >= self.TEMPERATURE_THRESHOLD):
-            return 1
-        else:
-            return 0
+        return fit.forecast(self.DATA_TO_PREDICT)
