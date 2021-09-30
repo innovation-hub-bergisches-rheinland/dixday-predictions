@@ -31,9 +31,10 @@ class EventHandler:
         tempValue = data[self.TEMPERATURE_KEY]
         datetime = data[self.TIMESTAMP_KEY]
 
+        datetime = pd.to_datetime(datetime, unit="ms")
+
         # append data point
         self.temperatureData[datetime] = tempValue
-
         # check if enough data available to train a model
         if(self.temperatureData.size > self.MIN_TRAIN_DATA):
             # reduce to the last MIN_TRAIN_DATA points
