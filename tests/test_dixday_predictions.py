@@ -12,4 +12,4 @@ def _read_config(config_path) -> dict:
 
 
 def test_version():
-    assert __version__ == '0.1.3'
+    assert __version__ == '0.1.4'
